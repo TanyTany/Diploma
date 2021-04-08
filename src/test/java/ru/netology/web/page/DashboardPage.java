@@ -14,4 +14,14 @@ public class DashboardPage {
     public DashboardPage() {
         heading.shouldBe(Condition.visible);
     }
+
+    public PaymentGatePage paymentGate() {
+        paymentGateButton.click();
+        return new PaymentGatePage();
+    }
+
+    public CreditGatePage creditGate() {
+        creditGateButton.click();
+        return new CreditGatePage();
+    }
 }

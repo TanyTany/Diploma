@@ -9,7 +9,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
-public class PaymentGatePage {
+public class CreditGatePage {
     private SelenideElement heading = $(byText("Оплата по карте")).parent();
     private SelenideElement cardNumber = $(byText("Номер карты"));
     private SelenideElement monthCard = $(byText("Месяц"));
@@ -25,7 +25,7 @@ public class PaymentGatePage {
     private SelenideElement invalidCvv = $(byText("Неверный формат"));
     private SelenideElement requiredField = $(byText("Поле обязательно для заполнения"));
 
-    public PaymentGatePage() {
+    public CreditGatePage() {
         heading.shouldBe(Condition.visible);
     }
 
