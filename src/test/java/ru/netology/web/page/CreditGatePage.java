@@ -8,22 +8,22 @@ import java.time.Duration;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class CreditGatePage {
-    private SelenideElement heading = $(byText("Оплата по карте")).parent();
-    private SelenideElement cardNumber = $(byText("Номер карты"));
-    private SelenideElement monthCard = $(byText("Месяц"));
-    private SelenideElement yearCard = $(byText("Год"));
-    private SelenideElement cardHolder = $(byText("Владелец"));
-    private SelenideElement cvvCode = $(byText("CVC/CVV"));
+    private SelenideElement heading = $(byText("Купить в кредит"));
+    private SelenideElement cardNumber = $("input[placeholder='0000 0000 0000 0000']");
+    private SelenideElement monthCard = $$("[tabindex='-1'] input").get(0);
+    private SelenideElement yearCard = $$("[tabindex='-1'] input").get(1);
+    private SelenideElement cardHolder = $$("[tabindex='-1'] input").get(2);
+    private SelenideElement cvvCode = $$("[tabindex='-1'] input").get(3);
     private SelenideElement continueButton = $(byText("Продолжить"));
     private SelenideElement success = $(byText("Операция одобрена Банком."));
     private SelenideElement failure = $(byText("Ошибка! Банк отказал в проведении операции."));
     private SelenideElement invalidDates = $(byText("Неверно указан срок действия карты"));
     private SelenideElement expireDates = $(byText("Истёк срок действия карты"));
-    private SelenideElement invalidUser = $(byText("Неверный формат имени и фамилии")); //bag
-    private SelenideElement invalidCvv = $(byText("Неверный формат"));
     private SelenideElement requiredField = $(byText("Поле обязательно для заполнения"));
+    private SelenideElement invalidField = $(".input__sub");
 
     public CreditGatePage() {
         heading.shouldBe(Condition.visible);
@@ -39,24 +39,27 @@ public class CreditGatePage {
     }
 
     public void successMsg() {
-        success.shouldBe(Condition.visible, Duration.ofSeconds(8));
+        success.shouldBe(Condition.visible, Duration.ofSeconds(12));
     }
+
     public void failureMsg() {
-        failure.shouldBe(Condition.visible, Duration.ofSeconds(8));
+        failure.shouldBe(Condition.visible, Duration.ofSeconds(12));
     }
-    public void invalidYearMsg() {
+
+    public void invalidDatesExpireMsg() {
         invalidDates.shouldBe(Condition.visible);
     }
+
     public void invalidLastYearMsg() {
         expireDates.shouldBe(Condition.visible);
     }
-    public void invalidUserMsg() {
-        invalidUser.shouldBe(Condition.visible);
+
+    public void invalidFieldMsg() {
+        invalidField.shouldBe(Condition.visible);
     }
-    public void invalidCvvMsg() {
-        invalidCvv.shouldBe(Condition.visible);
-    }
+
     public void requiredFieldMsg() {
         requiredField.shouldBe(Condition.visible);
     }
+
 }
