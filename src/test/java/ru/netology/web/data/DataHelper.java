@@ -52,6 +52,9 @@ public class DataHelper {
         return new CardInfo("4444 4444 4444 4441", "", "23", "Ivanov Ivan", "999");
     }
 
+    public static CardInfo getInvalidMontZeroValue() {
+        return new CardInfo("4444 4444 4444 4441", "00", "23", "Ivanov Ivan", "999");
+    }
 
     /// for field year
     public static CardInfo getInvalidLastYear() {

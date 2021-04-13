@@ -144,6 +144,19 @@ public class TestPayment {
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
     }
 
+    @Test
+    @Description("Поле Месяц заполнено нулевым значением")
+    void shouldInvalidMontZeroValue() {
+        val startPage = new StartPage();
+        val paymentGatePage = startPage.paymentGate();
+        val payInfo = DataHelper.getInvalidMontZeroValue();
+        paymentGatePage.payData(payInfo);
+        paymentGatePage.invalidFieldMsg();
+        DbInteraction.checkRegisterCount("order_entity", 0);
+        DbInteraction.checkRegisterCount("payment_entity", 0);
+        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+    }
+
     /// for field year
     @Test
     @Description("Поле Год с истекшим сроком")

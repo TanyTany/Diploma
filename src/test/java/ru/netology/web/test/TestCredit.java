@@ -69,10 +69,10 @@ public class TestCredit {
     @Description("Номер карты не заполнен")
     void shouldInvalidFieldNumberOfEmpty() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidFieldNumberOfEmpty();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -83,10 +83,10 @@ public class TestCredit {
     @Description("Номер карты из одинаковых цифр")
     void shouldInvalidFieldNumberOfSameNumb() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidFieldNumberOfSameNumb();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.failureMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.failureMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -96,10 +96,10 @@ public class TestCredit {
     @Description("Номер карты заполнен не полностью")
     void shouldInvalidFieldNumberNotCompletely() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidFieldNumberNotCompletely();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -111,10 +111,10 @@ public class TestCredit {
     @Description("Поле Месяц заполнено невалидным значением")
     void shouldInvalidMonthNonexistent() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMonthNonexistent();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidDatesExpireMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidDatesExpireMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -124,10 +124,10 @@ public class TestCredit {
     @Description("Поле Месяц заполнено однозначным числом")
     void shouldInvalidMonthOneFigure() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMonthOneFigure();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -137,10 +137,23 @@ public class TestCredit {
     @Description("Поле Месяц не заполнено")
     void shouldInvalidMonthEmpty() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMonthEmpty();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
+        DbInteraction.checkRegisterCount("order_entity", 0);
+        DbInteraction.checkRegisterCount("payment_entity", 0);
+        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+    }
+
+    @Test
+    @Description("Поле Месяц заполнено нулевым значением")
+    void shouldInvalidMontZeroValue() {
+        val startPage = new StartPage();
+        val creditGatePage = startPage.creditGate();
+        val payInfo = DataHelper.getInvalidMontZeroValue();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -151,10 +164,10 @@ public class TestCredit {
     @Description("Поле Год с истекшим сроком")
     void shouldInvalidLastYear() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidLastYear();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidLastYearMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidLastYearMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -164,10 +177,10 @@ public class TestCredit {
     @Description("Поле Год заполнено однозначным числом")
     void shouldInvalidYearOneFigure() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidYearOneFigure();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -177,10 +190,10 @@ public class TestCredit {
     @Description("Поле Год не заполнено")
     void shouldInvalidYearEmpty() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidYearEmpty();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -190,10 +203,10 @@ public class TestCredit {
     @Description("Поле Год 30")
     void shouldInvalidMoreFutureYear() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMoreFutureYear();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidDatesExpireMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidDatesExpireMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -205,10 +218,10 @@ public class TestCredit {
     @Description("Поле Владелец заполнено только Имя")
     void shouldNameWithoutSurname() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getNameWithoutSurname();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -218,10 +231,10 @@ public class TestCredit {
     @Description("Поле Владелец заполнено кириллицей")
     void shouldInvalidNameCyrillic() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidNameCyrillic();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -231,10 +244,10 @@ public class TestCredit {
     @Description("Поле Владелец не заполнено")
     void shouldInvalidNameEmpty() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidNameEmpty();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.requiredFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.requiredFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -244,10 +257,10 @@ public class TestCredit {
     @Description("Поле Владелец заполнено числовыми значениями")
     void shouldInvalidNameNumbers() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidNameNumbers();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -259,10 +272,10 @@ public class TestCredit {
     @Description("Поле CVV заполнено не полностью")
     void shouldInvalidCVVNonCompletely() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidCVVNonCompletely();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
@@ -272,10 +285,10 @@ public class TestCredit {
     @Description("Поле CVV не заполнено")
     void shouldInvalidCVVEmpty() {
         val startPage = new StartPage();
-        val paymentGatePage = startPage.creditGate();
+        val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidCVVEmpty();
-        paymentGatePage.payData(payInfo);
-        paymentGatePage.invalidFieldMsg();
+        creditGatePage.payData(payInfo);
+        creditGatePage.invalidFieldMsg();
         DbInteraction.checkRegisterCount("order_entity", 0);
         DbInteraction.checkRegisterCount("payment_entity", 0);
         DbInteraction.checkRegisterCount("credit_request_entity", 0);
