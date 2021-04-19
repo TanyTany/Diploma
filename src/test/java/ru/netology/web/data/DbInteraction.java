@@ -61,8 +61,8 @@ public class DbInteraction {
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
                 )
         ) {
-            val count = runner.query(conn, countSQL, new ScalarHandler<>());
-            return count.hashCode();
+            val count = runner.query(conn, countSQL, new ScalarHandler<>()).hashCode();
+            return count;
         }
         catch (SQLException e) {
             System.out.println("Не удалось получить доступ к таблице Payment");
@@ -79,8 +79,8 @@ public class DbInteraction {
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
                 )
         ) {
-            val count = runner.query(conn, countSQL, new ScalarHandler<>());
-            return count.hashCode();
+            val count = runner.query(conn, countSQL, new ScalarHandler<>()).hashCode();
+            return count;
         }
         catch (SQLException e) {
             System.out.println("Не удалось получить доступ к таблице Payment");
