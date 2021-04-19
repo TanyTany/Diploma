@@ -1,25 +1,15 @@
 package ru.netology.web.data;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 import lombok.Value;
+import ru.netology.web.models.CardInfo;
 
-@NoArgsConstructor
+
 public class DataHelper {
-
-    @Value
-    @AllArgsConstructor
-    public static class CardInfo {
-        private String cardNumber;
-        private String monthCard;
-        private String yearCard;
-        private String cardHolder;
-        private String cvvCode;
-    }
 
     /// Positive Case
     public static CardInfo getSuccessPayValidData() {
-        return new CardInfo("4444 4444 4444 4441", "08", "23", "Ivanov Ivan", "999");
+        return new CardInfo ("4444 4444 4444 4441", "08", "23", "Ivanov Ivan", "999");
     }
 
     public static CardInfo getFailurePayValidData() {

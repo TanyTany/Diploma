@@ -2,7 +2,7 @@ package ru.netology.web.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.web.data.DataHelper;
+import ru.netology.web.models.CardInfo;
 
 import java.time.Duration;
 
@@ -29,7 +29,7 @@ public class CreditGatePage {
         heading.shouldBe(Condition.visible);
     }
 
-    public void payData(DataHelper.CardInfo info) {
+    public void setCreditCardPayData(CardInfo info) {
         cardNumber.setValue(info.getCardNumber());
         monthCard.setValue(info.getMonthCard());
         yearCard.setValue(info.getYearCard());
@@ -38,27 +38,27 @@ public class CreditGatePage {
         continueButton.click();
     }
 
-    public void successMsg() {
+    public void verifySuccessMsg() {
         success.shouldBe(Condition.visible, Duration.ofSeconds(12));
     }
 
-    public void failureMsg() {
+    public void assertFailureMsg() {
         failure.shouldBe(Condition.visible, Duration.ofSeconds(12));
     }
 
-    public void invalidDatesExpireMsg() {
+    public void assertInvalidDatesExpireMsg() {
         invalidDates.shouldBe(Condition.visible);
     }
 
-    public void invalidLastYearMsg() {
+    public void assertInvalidLastYearMsg() {
         expireDates.shouldBe(Condition.visible);
     }
 
-    public void invalidFieldMsg() {
+    public void assertInvalidFieldMsg() {
         invalidField.shouldBe(Condition.visible);
     }
 
-    public void requiredFieldMsg() {
+    public void assertRequiredFieldMsg() {
         requiredField.shouldBe(Condition.visible);
     }
 

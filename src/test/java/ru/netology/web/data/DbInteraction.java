@@ -1,16 +1,21 @@
 package ru.netology.web.data;
 
 
+import lombok.Value;
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import ru.netology.web.models.Credit;
+import ru.netology.web.models.Payment;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Value
 public class DbInteraction {
 
     public static Payment getPayment() {
@@ -47,21 +52,41 @@ public class DbInteraction {
 
     }
 
-    public static void checkRegisterCount(String tabName, long expectedRecordCount) {
-        String countSQL = "SELECT COUNT(*) FROM " + tabName;
+
+    public static int getRecordCountOfPaymentEntity() {
+        String countSQL = "SELECT COUNT(*) FROM payment_entity;";
         var runner = new QueryRunner();
         try (
                 val conn = DriverManager.getConnection(
                         "jdbc:mysql://localhost:3306/app", "app", "pass"
                 )
         ) {
-            assertEquals(expectedRecordCount, (long) runner.query(conn, countSQL, new ScalarHandler<>())
-                    ,"неверное количество записей в таблице " + tabName+" ");
-            return ;
-        } catch (SQLException e) {
-            System.out.println("Не удалось получить доступ к таблице " + tabName );
+            val count = runner.query(conn, countSQL, new ScalarHandler<>());
+            return count.hashCode();
         }
-        return ;
+        catch (SQLException e) {
+            System.out.println("Не удалось получить доступ к таблице Payment");
+        }
+
+        return 0;
+    }
+
+    public static int getRecordCountOfCreditEntity() {
+        String countSQL = "SELECT COUNT(*) FROM credit_request_entity;";
+        var runner = new QueryRunner();
+        try (
+                val conn = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                )
+        ) {
+            val count = runner.query(conn, countSQL, new ScalarHandler<>());
+            return count.hashCode();
+        }
+        catch (SQLException e) {
+            System.out.println("Не удалось получить доступ к таблице Payment");
+        }
+
+        return 0;
     }
 
     public static void clearTables() {

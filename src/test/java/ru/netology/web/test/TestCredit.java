@@ -15,6 +15,8 @@ import ru.netology.web.page.StartPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.netology.web.data.DbInteraction.getRecordCountOfCreditEntity;
+import static ru.netology.web.data.DbInteraction.getRecordCountOfPaymentEntity;
 
 public class TestCredit {
 
@@ -41,11 +43,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getSuccessPayValidData();
-        creditGatePage.payData(payInfo);
-        creditGatePage.successMsg();
-        DbInteraction.checkRegisterCount("order_entity", 1);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 1);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.verifySuccessMsg();
+        assertEquals(1, getRecordCountOfCreditEntity());
         assertEquals("APPROVED", DbInteraction.getCredit().getStatus());
     }
 
@@ -55,11 +55,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getFailurePayValidData();
-        creditGatePage.payData(payInfo);
-        creditGatePage.failureMsg();
-        DbInteraction.checkRegisterCount("order_entity", 1);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 1);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertFailureMsg();
+        assertEquals(1, getRecordCountOfCreditEntity());
         assertEquals("DECLINED", DbInteraction.getCredit().getStatus());
     }
 
@@ -71,11 +69,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidFieldNumberOfEmpty();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
 
     }
 
@@ -85,11 +81,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidFieldNumberOfSameNumb();
-        creditGatePage.payData(payInfo);
-        creditGatePage.failureMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertFailureMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -98,11 +92,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidFieldNumberNotCompletely();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     /// for field month
@@ -113,11 +105,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMonthNonexistent();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidDatesExpireMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidDatesExpireMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -126,11 +116,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMonthOneFigure();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -139,11 +127,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMonthEmpty();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -152,11 +138,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMontZeroValue();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     /// for field year
@@ -166,11 +150,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidLastYear();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidLastYearMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidLastYearMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -179,11 +161,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidYearOneFigure();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -192,11 +172,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidYearEmpty();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -205,11 +183,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidMoreFutureYear();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidDatesExpireMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidDatesExpireMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     /// for field card holder
@@ -220,11 +196,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getNameWithoutSurname();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -233,11 +207,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidNameCyrillic();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -246,11 +218,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidNameEmpty();
-        creditGatePage.payData(payInfo);
-        creditGatePage.requiredFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertRequiredFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -259,11 +229,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidNameNumbers();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     /// for field CVV code
@@ -274,11 +242,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidCVVNonCompletely();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
     @Test
@@ -287,11 +253,9 @@ public class TestCredit {
         val startPage = new StartPage();
         val creditGatePage = startPage.creditGate();
         val payInfo = DataHelper.getInvalidCVVEmpty();
-        creditGatePage.payData(payInfo);
-        creditGatePage.invalidFieldMsg();
-        DbInteraction.checkRegisterCount("order_entity", 0);
-        DbInteraction.checkRegisterCount("payment_entity", 0);
-        DbInteraction.checkRegisterCount("credit_request_entity", 0);
+        creditGatePage.setCreditCardPayData(payInfo);
+        creditGatePage.assertInvalidFieldMsg();
+        assertEquals(0, getRecordCountOfCreditEntity());
     }
 
 }
