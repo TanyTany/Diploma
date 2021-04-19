@@ -11,7 +11,7 @@
 
 ### Запуск тестов и генерация отчетов
 
-`./gradlew test allureReport` - первичный запуск
+`./gradlew allureReport` - первичный запуск
 
 `./gradlew clean test` - сгенерировать отчеты
 
