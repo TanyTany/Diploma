@@ -17,14 +17,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Value
 public class DbInteraction {
+    private static String url = System.getProperty("db.url");
+    private static String user = System.getProperty("db.user");
+    private static String password = System.getProperty("db.pass");
 
     public static Payment getPayment() {
         String dataSQL = "SELECT * FROM payment_entity;";
         var runner = new QueryRunner();
         try (
             val conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/app", "app", "pass"
-            )
+                    url, user, password)
         ) {
             Payment register = runner.query(conn, dataSQL, new BeanHandler<>(Payment.class));
             return register;
@@ -40,7 +42,7 @@ public class DbInteraction {
         var runner = new QueryRunner();
         try (
                 val conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                        url, user, password
                 )
         ) {
             Credit register = runner.query(conn, dataSQL, new BeanHandler<>(Credit.class));
@@ -53,15 +55,15 @@ public class DbInteraction {
     }
 
 
-    public static int getRecordCountOfPaymentEntity() {
+    public static long getRecordCountOfPaymentEntity() {
         String countSQL = "SELECT COUNT(*) FROM payment_entity;";
         var runner = new QueryRunner();
         try (
                 val conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                        url, user, password
                 )
         ) {
-            val count = runner.query(conn, countSQL, new ScalarHandler<>()).hashCode();
+            long count = runner.query(conn, countSQL, new ScalarHandler<>());
             return count;
         }
         catch (SQLException e) {
@@ -71,15 +73,15 @@ public class DbInteraction {
         return 0;
     }
 
-    public static int getRecordCountOfCreditEntity() {
+    public static long getRecordCountOfCreditEntity() {
         String countSQL = "SELECT COUNT(*) FROM credit_request_entity;";
         var runner = new QueryRunner();
         try (
                 val conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                        url, user, password
                 )
         ) {
-            val count = runner.query(conn, countSQL, new ScalarHandler<>()).hashCode();
+            long count = runner.query(conn, countSQL, new ScalarHandler<>()).hashCode();
             return count;
         }
         catch (SQLException e) {
@@ -96,7 +98,7 @@ public class DbInteraction {
         String rmCredit = "DELETE FROM credit_request_entity;";
         try (
                 val conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/app", "app", "pass"
+                        url, user, password
                 )
         ) {
             runner.update(conn, rmOrder);

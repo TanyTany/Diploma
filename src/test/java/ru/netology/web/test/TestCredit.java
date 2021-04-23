@@ -19,6 +19,7 @@ import static ru.netology.web.data.DbInteraction.getRecordCountOfCreditEntity;
 import static ru.netology.web.data.DbInteraction.getRecordCountOfPaymentEntity;
 
 public class TestCredit {
+    private static String url = System.getProperty("app.url");
 
     @BeforeAll
     static void setUp() {
@@ -34,7 +35,7 @@ public class TestCredit {
     @BeforeEach
     void setUpDb() {
         DbInteraction.clearTables();
-        open("http://localhost:8080");
+        open(url);
     }
 
     @Test

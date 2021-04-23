@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.web.data.DbInteraction.getRecordCountOfPaymentEntity;
 
 public class TestPayment {
+
+    private static String url = System.getProperty("app.url");
     @BeforeAll
     static void setUp() {
         Configuration.headless = true;
@@ -31,7 +33,7 @@ public class TestPayment {
     @BeforeEach
     void setUpDb() {
         DbInteraction.clearTables();
-        open("http://localhost:8080");
+        open(url);
     }
 
     /// Positive Case
