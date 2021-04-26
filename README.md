@@ -1,3 +1,9 @@
+[План автоматизации](https://github.com/TanyTany/Diploma/blob/master/documentation/PLAN.md)
+
+[Отчет о проведенном тестирования](https://github.com/TanyTany/Diploma/blob/master/documentation/Report.md)
+
+[Отчет о проведенной автоматизации](https://github.com/TanyTany/Diploma/blob/master/documentation/Summary.md)
+
 ### Инструкция подключения БД и запуску SUT
 * C помощью команды git clone осуществить клонирование репозитория
 * Открыть проект в Intellij IDEA
